@@ -1,28 +1,30 @@
 "use client";
 
-import { Message } from "./chat";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { BsSendFill } from "react-icons/bs";
-import { useAppContext } from "../context/AppContext";
+import { useChatContext } from "../context/ChatContext";
+import { useRouter } from "next/navigation";
 
-export default function PromptInput({setMessages}: {setMessages: React.Dispatch<React.SetStateAction<Message[]>>}) {
+// {setMessages}: {setMessages: React.Dispatch<React.SetStateAction<Message[]>>}
+
+export default function PromptInput() {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-    const appContext = useAppContext();
+    const chatContext = useChatContext();
+    const router = useRouter();
 
     const sendButtonHandler = () => {
         const textareaElement = textareaRef.current;
         if (!textareaElement) return; 
         const value = textareaElement.value;
+        if (value === "" || value === null || value === undefined) return;
         const msg = {
             content: value,
             role: "user",
         }
-        if (!appContext.isChatStarted) {
-            appContext.setIsChatStarted(true);
-        }
-        setMessages(prev => [...prev, msg]);
+        chatContext.setInitialMessage(msg);
         textareaElement.value = "";
+        const projectId = crypto.randomUUID();
+        router.replace(`project/${projectId}`);
     }
 
     return <div className="relative w-full mx-auto max-w-4xl p-4 border-2 border-black/50 rounded-sm transition-all duration-100 outline-black/60 focus-within:outline-6 focus">
@@ -33,3 +35,5 @@ export default function PromptInput({setMessages}: {setMessages: React.Dispatch<
         </button>
     </div>
 }
+
+// onClick={sendButtonHandler}
