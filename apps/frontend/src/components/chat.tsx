@@ -2,11 +2,7 @@
 
 import PromptInput from "@/src/components/prompt-input";
 import { RefObject, useState } from "react";
-
-export type Message = {
-  content: string;
-  role: string;
-};
+import { Message } from "../context/ChatContext";
 
 export default function Chat({chatRef}: {chatRef: RefObject<HTMLTableSectionElement|null>}) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -32,7 +28,7 @@ export default function Chat({chatRef}: {chatRef: RefObject<HTMLTableSectionElem
       </div>
 
       {/* Composer */}
-      <PromptInput setMessages={setMessages} />
+      {/* <PromptInput setMessages={setMessages} /> */}
     </section>
   );
 }
