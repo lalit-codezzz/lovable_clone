@@ -4,11 +4,11 @@ import PromptInput from "@/src/components/prompt-input";
 import { RefObject, useState } from "react";
 import { Message } from "../context/ChatContext";
 
-export default function Chat({chatRef}: {chatRef: RefObject<HTMLTableSectionElement|null>}) {
+export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
 
   return (
-    <section ref={chatRef} className="border-2 border-red-500 chat-cmp-custom flex h-full w-full p-4 flex-col">
+    <section className="border-2 border-red-500 chat-cmp-custom flex h-full w-[30%] p-4 flex-col">
       {/* Header */}
       {/* <header className="shrink-0 border-b border-black/[0.06] px-5 py-4">
                 <p className="text-[14px] font-medium text-neutral-900">Assistant</p>
@@ -27,8 +27,7 @@ export default function Chat({chatRef}: {chatRef: RefObject<HTMLTableSectionElem
         )}
       </div>
 
-      {/* Composer */}
-      {/* <PromptInput setMessages={setMessages} /> */}
+      <PromptInput />
     </section>
   );
 }
