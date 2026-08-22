@@ -1,30 +1,31 @@
-import { templateRegistry, Templates } from "../template-registry/template-registry.js";
+import { SandboxManager } from "../sandbox/sandbox-manager.js";
+import { Sandbox } from "../sandbox/sandbox.js";
+import { templateRegistry, TemplateNames } from "../template-registry/template-registry.js";
 import { Tool } from "./tool.js";
 
 type CreateProjectToolArgsType = {
-    templateName: Templates;
+    templateName: TemplateNames;
 }
 
 export class CreateProjectTool implements Tool {
-    name: string;
+    name = "create_project";
     execute: (args: CreateProjectToolArgsType) => Promise<string>;
 
-    constructor(name: string) {
-        this.name = name;
+    constructor() {
         this.execute = async (args: CreateProjectToolArgsType) => {
 
             const templateName = args.templateName;
 
-            let template;
-            if (!templateRegistry[templateName]) {
+            let template = templateRegistry.get(templateName);
+            if (!template) {
                 throw new Error(`Unknown template: ${templateName}`);
             }
-            
-            template = templateRegistry[templateName];
 
-            console.log(template);
+            const sandbox: Sandbox = await SandboxManager.create(template);
 
-            return Promise.resolve("");
+            console.log(sandbox);
+
+            return Promise.resolve("sandbox up & running!");
         }
     }
 }

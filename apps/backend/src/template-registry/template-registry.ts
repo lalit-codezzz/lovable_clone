@@ -1,14 +1,24 @@
 
-export type Templates = "react-vite-ts";
+export type TemplateNames = "react-vite-ts";
 
-type TemplateRegistry = Record<Templates, any>;
+export type Template = {commands: {init: string[]; install: string[]; dev: string[]}};
+
+type TemplateRegistry = {
+    templates: Record<TemplateNames, Template>;
+    get: (templateName: TemplateNames) => Template;
+};
 
 export const templateRegistry: TemplateRegistry = {
-    "react-vite-ts": {
-        framework: "react",
-        commands: {
-            init: "npm create-vite@latest",
-            dev: "npm run dev",
+    templates: {
+        "react-vite-ts": {
+            commands: {
+                init: ["npm", "create", "vite@latest", ".", "--", "--template", "react-ts"],
+                install: ["npm", "install"],
+                dev: ["npm", "run", "dev", "--", "--host", "0.0.0.0"],
+            }
         }
-    }
+    },
+    get: (templateName: TemplateNames) => {
+        return templateRegistry.templates[templateName];
+    },
 };

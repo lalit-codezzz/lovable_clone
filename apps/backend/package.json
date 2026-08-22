@@ -12,13 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/dockerode": "^4.0.1",
     "cors": "^2.8.6",
+    "dockerode": "^5.0.1",
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
-    "typescript": "^7.0.2",
-    "@repo/typescript-config": "workspace:*"
+    "typescript": "^7.0.2"
   }
 }
